@@ -1,0 +1,22 @@
+{
+    "name": "constellation/noaa",
+    "description": "Client library for NOAA's forecast and current weather service api",
+    "keywords": ["weather", "noaa"],
+    "homepage": "https://github.com/motivatedsloth/noaa",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alan Buss",
+            "email": "al@constellationwebservices.com",
+            "homepage": "http://constellationwebservices.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "php-units-of-measure/php-units-of-measure": "^2.1"
+    },
+    "autoload": {
+        "psr-4": {"noaa\\": "noaa/"}
+    }
+}

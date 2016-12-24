@@ -1,0 +1,7 @@
+<phpunit bootstrap="noaa/autoload.php">
+  <testsuites>
+    <testsuite name="noaa">
+      <directory>tests</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>

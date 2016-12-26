@@ -81,7 +81,7 @@ class NOAA{
 		 * @return noaa\Station
 		 */
 		public function getStation(){
-				return $this->station;
+				return $this->station();
 		}
 		
 		/**

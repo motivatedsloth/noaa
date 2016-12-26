@@ -7,7 +7,7 @@ Both the hourly and daily forecast return 7 days worth of data.
 
 Observations are for the last 5 hours
 
-Basic Usage for Forecast for a given point
+Basic Usage - Forecast for a given point
 ==========================================
 
     <?php
@@ -24,7 +24,7 @@ Basic Usage for Forecast for a given point
         echo $forecast->getStart('D, d M H:i:s') . " Temp:" . $forecast->getTemperature() . "\n";
     }
 
-Basic Usage for Observation for a given point
+Basic Usage - Observation for a given point
 ==========================================
 
     <?php
@@ -36,6 +36,8 @@ Basic Usage for Observation for a given point
     $noaa = new NOAA(new Cache);
     $point = new Point(43.43, -90.80);
     $noaa->setPoint($point);
+    //get a station
+    echo "Observations recorded at: " . $noaa->getStation()->getName()."\n";
     $observations = $noaa->getObservations();
     foreach($observations as $observation){
         echo $observation->getTime('D, d M H:i:s') . " Temp:" . $observation->getTemperature() . "\n";

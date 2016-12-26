@@ -35,10 +35,15 @@ class Observation extends Base{
 		}
 
 		/**
-		 * @return \DateTime observation was recorded
+		 * @param string optional format string
+		 * @return \DateTime|string observation was recorded
 		 */
-		public function getTime(){
-				return new \DateTime($this->properties->properties->timestamp);
+		public function getTime($format = null){
+				$dt = new \DateTime($this->properties->properties->timestamp);
+				if($format){
+						return date($format, $dt->getTimestamp());
+				}
+				return $dt;
 		}
 
 		/**

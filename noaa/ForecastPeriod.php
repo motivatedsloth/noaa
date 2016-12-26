@@ -37,7 +37,7 @@ class ForecastPeriod extends Base{
 
 		/**
 		 * @param string $format for date function
-		 * @return DateTime start time of period in local time zone
+		 * @return DateTime|string start time of period in local time zone
 		 */
 		public function getStart($format = null){
 				$dt = new \DateTime($this->properties->startTime);
@@ -49,7 +49,7 @@ class ForecastPeriod extends Base{
 
 		/**
 		 * @param string $format for date function
-		 * @return DateTime end time of period in local time zone
+		 * @return DateTime|string end time of period in local time zone
 		 */
 		public function getEnd($format = null){
 				$dt = new \DateTime($this->properties->endTime);
@@ -67,21 +67,22 @@ class ForecastPeriod extends Base{
 		}
 
 		/**
-		 * @return float temperature expected for this period
+		 *
+		 * @return float temperature expected for this period in degrees F
 		 */
 		public function getTemperature(){
 				return $this->properties->temperature;
 		}
 
 		/**
-		 * @return string wind speed ie 15MPH
+		 * @return string wind speed ie 15 mph
 		 */
 		public function getWindSpeed(){
 				return $this->properties->windSpeed;
 		}
 
 		/**
-		 * @return string wind direction WNW
+		 * @return string wind direction ie WNW
 		 */
 		public function getWindDirection(){
 				return $this->properties->windDirection;

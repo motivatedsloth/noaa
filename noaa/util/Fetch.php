@@ -47,6 +47,8 @@ class Fetch{
 				$rm = curl_init($url);
 				curl_setopt($rm, CURLOPT_FOLLOWLOCATION, true);
 				curl_setopt($rm, CURLOPT_MAXREDIRS, 20);
+				curl_setopt($rm, CURLOPT_SSL_VERIFYPEER, false);
+				curl_setopt($rm, CURLOPT_AUTOREFERER, true);
 				curl_setopt($rm, CURLOPT_RETURNTRANSFER, 20);
 				//curl_setopt($rm, CURLOPT_VERBOSE, true);
 				$ret = curl_exec($rm);

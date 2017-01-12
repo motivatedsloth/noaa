@@ -1,4 +1,6 @@
 # noaa
+Please note: the new api is still under development. 
+
 A php library for working with the NOAA api
 The [NOAA documentation](https://forecast-v3.weather.gov/documentation)
 

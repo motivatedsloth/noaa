@@ -59,10 +59,15 @@ class Observation extends Base{
 		}
 
 		/**
+		 * @param string "F" or "C" default "F"
 		 * @return float temperature in degrees C
 		 */
-		public function getTemperature(){
-				return $this->properties->properties->temperature->value;
+		public function getTemperature($unit = "F"){
+				if($unit == "F"){
+						return ($this->properties->properties->temperature->value * 1.8) + 32;
+				}else{
+						return $this->properties->properties->temperature->value;
+				}
 		}
 
 		/**

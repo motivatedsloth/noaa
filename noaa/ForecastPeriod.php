@@ -11,12 +11,13 @@
 
 namespace noaa;
 use noaa\Base;
+use DateTime;
 
 /**
  * class to describe a forecast period
  */
 class ForecastPeriod extends Base{
-		
+
 		public function __construct($properties){
 				$this->properties = $properties;
 		}
@@ -40,7 +41,7 @@ class ForecastPeriod extends Base{
 		 * @return DateTime|string start time of period in local time zone
 		 */
 		public function getStart($format = null){
-				$dt = new \DateTime($this->properties->startTime);
+				$dt = new DateTime($this->properties->startTime);
 				if($format){
 						return date($format, $dt->getTimestamp());
 				}
@@ -52,7 +53,7 @@ class ForecastPeriod extends Base{
 		 * @return DateTime|string end time of period in local time zone
 		 */
 		public function getEnd($format = null){
-				$dt = new \DateTime($this->properties->endTime);
+				$dt = new DateTime($this->properties->endTime);
 				if($format){
 						return date($format, $dt->getTimestamp());
 				}
@@ -68,10 +69,15 @@ class ForecastPeriod extends Base{
 
 		/**
 		 *
+		 * @param string optional units F or C default is F
 		 * @return float temperature expected for this period in degrees F
 		 */
-		public function getTemperature(){
-				return $this->properties->temperature;
+		public function getTemperature($unit = "F"){
+				if($unit == "F"){
+						return $this->properties->temperature;
+				}else{
+						return ($this->properties->temperature - 32) * 0.5556;
+				}
 		}
 
 		/**

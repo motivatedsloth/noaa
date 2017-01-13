@@ -13,12 +13,6 @@ class FetchTest extends TestCase{
 				$fetch = new Fetch($cache);
 				$url = "https://api.weather.gov/points/43.43,-90.8";
 				$this->assertObjectHasAttribute("properties", $fetch->load($url));
-				sleep(2);
-				$res = $cache->load($url, "PT1H");
-				$res = json_decode($res);
-				$this->assertObjectHasAttribute("properties", $res);
-				$this->assertFalse($cache->load($url, "PT1S"));
-
 		}
 				
 		function __destruct(){

@@ -6,6 +6,7 @@ namespace noaa\util;
 use noaa\util\Cache;
 use noaa\Point;
 use noaa\Forecast;
+use Exception;
 
 class Fetch{
 
@@ -22,14 +23,19 @@ class Fetch{
 		 * @return stdObject from json
 		 */
 		public function load($url, $ttl = "PT1H"){
-				if($res = $this->cache->load($url, $ttl)){
-				}elseif($res = $this->remote($url)){
-						$this->cache->save($url, $res);
+				$status = $this->cache->status($url, $ttl);
+				if($status != "fresh"){ //stale or none
+						$res = $this->remote($url);
+						if($res){
+								$this->cache->save($url, $res);
+								return json_decode($res);
+						}
 				}
-				if(!$res){
-						throw new \Exception("Unable to fetch url - $url.");
+				if($status == "none"){
+						throw new Exception("Unable to fetch url - $url.");
 				}
-				return json_decode($res);
+				//return from cache
+				return json_decode($this->cache->load($url));
 		}
 
 		/**
@@ -52,6 +58,9 @@ class Fetch{
 				curl_setopt($rm, CURLOPT_RETURNTRANSFER, 20);
 				//curl_setopt($rm, CURLOPT_VERBOSE, true);
 				$ret = curl_exec($rm);
+				if(curl_getinfo($rm, CURLINFO_HTTP_CODE) == 500){
+						throw new Exception("Server error 500 from weather at url: $url");
+				}
 				curl_close($rm);
 				return $ret;
 		}

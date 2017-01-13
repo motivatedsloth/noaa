@@ -1,5 +1,9 @@
 <?php
 namespace noaa\util;
+use RuntimeException;
+use DateInterval;
+use DateTime;
+
 /**
  * class to cache json data from noaa
  */
@@ -25,16 +29,32 @@ class Cache{
 		 * @param string $url source of data
 		 * @param string $ttl for DateInterval constructor
 		 * @see http://php.net/manual/en/dateinterval.construct.php
-		 * @return mixed string from file or false if not cached
+		 * @return string "fresh", "stale", "none"
 		 */
-		public function load($url, $ttl){
+		public function status($url, $ttl){
 				$fname = $this->getFileName($url);
-				$ret = false;
-				if(file_exists($fname) && !$this->isExpired($fname, $ttl)){
-						$ret = file_get_contents($this->getFileName($url));
+				$status = "none";
+				if(!file_exists($fname)){
+						return $status;
 				}
-				return $ret;
+				$status = "stale";
+				if($this->isExpired($fname, $ttl)){
+						return $status;
+				}
+				return "fresh";
+		}
 
+		/**
+		 * @param string $url source of data
+		 * @return mixed string from file or false if not cached
+		 * @throws RuntimeException if file does not exist
+		 */
+		public function load($url){
+				$fname = $this->getFileName($url);
+				if(file_exists($fname)){
+						return file_get_contents($this->getFileName($url));
+				}
+				throw new RuntimeException("File for $url not in cache");
 		}
 
 		/**
@@ -43,7 +63,8 @@ class Cache{
 		 * @return bool true on success
 		 */ 
 		public function save($url, $data){
-				return file_put_contents($this->getFileName($url), $data) !== false;
+				$fname = $this->getFileName($url);
+				return file_put_contents($fname, $data) !== false;
 		}
 
 		/**
@@ -53,17 +74,15 @@ class Cache{
 		 */
 		protected function isExpired($fname, $ttl){
 				$mtime = filemtime($fname);
-				$mtime = new \DateTime("@$mtime");
-				if($mtime->add(new \DateInterval($ttl)) < new \DateTime()){
-						$this->delete($fname);
-				};
-				return !is_writable($fname);
+				$mtime = new DateTime("@$mtime");
+				return $mtime->add(new DateInterval($ttl)) < new DateTime();
 		}
 
 		/**
 		 * @param string $fname to delete
 		 */
-		protected function delete($fname){
+		public function delete($url){
+				$fname = $this->getFileName($url);
 				return unlink($fname);
 		}
 

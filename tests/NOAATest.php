@@ -24,9 +24,6 @@ class NOAATest extends TestCase{
 				$this->assertTrue(is_array($hourly));
 				$dt = $hourly[0]->getStart();
 				$this->assertTrue($dt instanceof \DateTime);
-				sleep(2);
-				$url = $noaa->getPoint()->getForecastHourly();
-				$this->assertFalse($noaa->getCache()->load($url, "PT1S"));
 				return $noaa;
 		}
 				
@@ -38,9 +35,6 @@ class NOAATest extends TestCase{
 				$this->assertTrue(is_array($daily));
 				$dt = $daily[0]->getStart();
 				$this->assertTrue($dt instanceof \DateTime);
-				sleep(2);
-				$url = $noaa->getPoint()->getForecast();
-				$this->assertFalse($noaa->getCache()->load($url, "PT1S"));
 				return $noaa;
 		}
 

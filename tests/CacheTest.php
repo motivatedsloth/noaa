@@ -11,6 +11,7 @@ class CacheTest extends TestCase{
 		function testSave(){
 				$cache = new Cache;
 				$this->assertTrue($cache->save("testing", "somedata"));
+				$this->assertEquals("somedata", $cache->load("testing"));
 				return $cache;
 		}
 
@@ -18,12 +19,20 @@ class CacheTest extends TestCase{
 		 * @depends testSave
 		 */
 		function testLoad($cache){
-				$this->assertFalse($cache->load("nonexistent", "PT1H"));
-				$this->assertEquals($cache->load("testing", "PT1H"), "somedata");
+				$this->assertEquals("none", $cache->status("nonexistent", "PT1H"));
+				$this->assertEquals("fresh", $cache->status("testing", "PT1H"), "somedata");
 				sleep(3);
-				$this->assertFalse($cache->load("testing", "PT1S"));
+				$this->assertEquals("stale", $cache->status("testing", "PT1S"));
+				return $cache;
 		}
 
+		/**
+		 * @depends testLoad
+		 */
+		function testDelete($cache){
+				$cache->delete("testing");
+				$this->assertEquals("none", $cache->status("testing", "PT1H"));
+		}
 		function __destruct(){
 				@rmdir(dirname(__DIR__). "/cache");
 		}

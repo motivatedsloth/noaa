@@ -12,6 +12,7 @@
 namespace noaa;
 use noaa\Base;
 use noaa\ForecastPeriod;
+use DateTime;
 
 /**
  * class to manage a collection of ForecastPeriods

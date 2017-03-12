@@ -13,6 +13,7 @@ namespace noaa;
 use noaa\Base;
 use noaa\ForecastPeriod;
 use DateTime;
+use DateInterval;
 
 /**
  * class to manage a collection of ForecastPeriods
@@ -46,6 +47,6 @@ class Forecast extends Base{
 		 * @return bool true if forecast is older than update frequency
 		 */
 		public function isExpired(){
-				return $this->getUpdated()->add(new \DateInterval(self::TTL)) < new \DateTime();
+				return $this->getUpdated()->add(new DateInterval(self::TTL)) < new DateTime();
 		}
 }//class

@@ -56,6 +56,7 @@ class Fetch{
 				curl_setopt($rm, CURLOPT_SSL_VERIFYPEER, false);
 				curl_setopt($rm, CURLOPT_AUTOREFERER, true);
 				curl_setopt($rm, CURLOPT_RETURNTRANSFER, 20);
+                curl_setopt($rm, CURLOPT_USERAGENT, 'motivatedsloth al@constellationwebservices');
 				//curl_setopt($rm, CURLOPT_VERBOSE, true);
 				$ret = curl_exec($rm);
 				if(curl_getinfo($rm, CURLINFO_HTTP_CODE) == 500){

@@ -52,8 +52,8 @@ class NOAA{
 		/**
 		 * @param noaa\Cache
 		 */
-		public function __construct(Cache $cache){
-				$this->fetch = new Fetch($cache);
+		public function __construct(Cache $cache, $apikey = "my_noaa_app"){
+				$this->fetch = new Fetch($cache, $apikey);
 		}
 
 		/**

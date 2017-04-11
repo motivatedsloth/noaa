@@ -9,11 +9,22 @@ use noaa\Forecast;
 use Exception;
 
 class Fetch{
-
+        /** @var noaa\util\Cache */
 		protected $cache;
 
-		public function __construct(Cache $cache){
+        /**
+         * string to use for useragent, will be an api key in future
+         * 
+         * @see https://forecast-v3.weather.gov/documentation 
+         * API Reference tab, Authentication section
+         *
+         * @var string
+         */
+        protected $key;
+
+		public function __construct(Cache $cache, $key = "my_noaa_app"){
 				$this->cache = $cache;
+                $this->key = $key;
 		}
 
 		/**
@@ -56,7 +67,7 @@ class Fetch{
 				curl_setopt($rm, CURLOPT_SSL_VERIFYPEER, false);
 				curl_setopt($rm, CURLOPT_AUTOREFERER, true);
 				curl_setopt($rm, CURLOPT_RETURNTRANSFER, 20);
-                curl_setopt($rm, CURLOPT_USERAGENT, 'motivatedsloth al@constellationwebservices');
+                curl_setopt($rm, CURLOPT_USERAGENT, $this->key);
 				//curl_setopt($rm, CURLOPT_VERBOSE, true);
 				$ret = curl_exec($rm);
 				if(curl_getinfo($rm, CURLINFO_HTTP_CODE) == 500){

@@ -15,7 +15,7 @@ class Fetch{
         /**
          * string to use for useragent, will be an api key in future
          * 
-         * @see https://forecast-v3.weather.gov/documentation 
+         * @see https://www.weather.gov/documentation/services-web-api
          * API Reference tab, Authentication section
          *
          * @var string

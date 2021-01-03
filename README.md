@@ -2,7 +2,7 @@
 Please note: the new api is still under development. 
 
 A php library for working with the NOAA api
-The [NOAA documentation](https://forecast-v3.weather.gov/documentation)
+The [NOAA documentation](https://www.weather.gov/documentation/services-web-api)
 
 Forecasts can be retrieved for a point or a station.
 Both the hourly and daily forecast return 7 days worth of data.
